@@ -71,7 +71,7 @@ def home_page():
            # global current_user
             #current_user = username     #This saves the username in the current_username placeholder (Global)
             
-            #storing user info is session (SQL) instead of in global variable (current_user) 
+            #storing user info in session (SQL) instead of in global variable (current_user) 
             session["user_id"] = user.id
             session["username"] = user.username
             flash("Login Successful")
@@ -267,7 +267,7 @@ def delete_note(id):
             # note["id"] = i
         """
     
-    
+
     if "user_id" not in session:
             flash("Please login first!")
             return redirect(url_for("home_page"))
@@ -291,8 +291,6 @@ def delete_note(id):
 @app.route("/notes/<int:id>/toggle", methods=["POST"])
 def toggle(id):
     """global current_user
-    if current_user is None:
-        flash("Please login first")
 
     # This checks if the id exists in the user's notes list
     if id >=0 and id < len(notes_data[current_user]):
@@ -306,9 +304,7 @@ def toggle(id):
 
         return redirect(url_for("notes"))"""
    
-    if "user_id" not in session:
-        flash("Please login first!")
-        return redirect(url_for("home_page"))
+
 
     note = Note.query.filter_by(id=id, user_id=session["user_id"]).first()
     if "completed" in request.form:
