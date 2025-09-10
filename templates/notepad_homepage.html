@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Notepad</title>
+</head>
+<body><!--The below code using jinja2 is written so as to be able to use flash under the particular function (the html function name) in python coding-->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for msg in messages %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    <h1>
+        Welcome to my online Notepad
+    </h1>
+    <h2>Login Page</h2>
+    <form action="/" method="post">
+        <label>username</label>
+        <input type="text" placeholder="username" name="username" required>
+        <label>password</label>
+        <input type="password" placeholder="password" name="password" required>     <!--required used here tell the browser that this field cannot be empty-->
+        <input type="submit" value="Login">
+       
+    </form>
+    <p>New user? <a href="/register">Please register here</a> </p>      <!--the <a href> used here helps new user to navigate to the register page-->
+
+      <br>  
+    <h2>Click for news</h2>
+    <p><a href="{{ news_url }}" target="_blank">{{ news_title }}</a></p>
+</body>
+</html>

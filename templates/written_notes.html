@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+</head>
+<body>
+       {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for msg in messages %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    <h1>welcome {{ username }} to Your written notes</h1>
+    <a href="/logout">Log Out</a>
+
+    <h2>Add a New Note</h2>
+    <form action="/notes" method="post">
+        <label>Title:</label>
+        <input type="text" name="title" required><br>
+        <label>Body</label>
+        <textarea type="text" name="body" required></textarea><br>      <!--textarea represents a multiline plain text edit control for the element's raw value-->
+        <label>Priority</label>
+        <select name="priority" required>           <!--The select element represents a control for selecting amongst a set of options.-->
+            <option value="High">High</option>               <!--The option element represents an option in a select element or as part of a list of suggestions in a datalist element.-->
+            <option value="Medium"> Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <br>
+        <input type="submit" value="Add Note">
+        </form>
+
+        <h2>Your Notes</h2>
+        <ul>{% for note in notes %}
+            <li>
+                <strong>{{ note.title }}</strong> ({{ note.priority }})<br>
+                {% if note.completed %}  {% endif %}
+                <form action="/notes/{{ note.id }}/toggle" method="post" style="display: inline;">
+                    <input type="checkbox" name="completed" onchange="this.form.submit()" 
+                    {% if note.completed %} checked {% endif %}>
+                    <label>{{ "Completed" if note.completed else "Not completed"}}</label>
+                </form>
+             <a href="/notes/{{ note.id }}/read_note">Read</a> |       <!--Here anchor tag is used to redirect to read page for each of the notes-->
+             <a href="/notes/{{ note.id }}/edit_note">Edit</a> |
+             <a href="/notes/{{ note.id }}/delete_note">Delete</a> | 
+            
+            </li>
+            {% endfor %}
+        </ul>
+</body>
+</html>
+
+
+

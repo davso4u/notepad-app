@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Note</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for msg in messages %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    
+    <h1>Edit Note</h1>
+    <form action="/notes/{{ id }}/edit_note" method="post">    <!--this means i am directing it to edit_note url for a particuluar note-->
+        <label>Title</label>
+        <input type="text" name="title" value="{{ note.title}}" required><br>
+        <label>Body</label>
+        <textarea type="text" name="body" required>{{ note.body}} </textarea><br>
+        <label>Priority</label>
+        <select name="priority" required>
+            <option value="High" {% if note.priority == "High" %}selected {% endif %}>High</option>
+            <option value="Medium" {% if note.priority =="Medium" %}selected {% endif %}>Medium</option>
+            <option value="Low" {% if note.priority == "Low" %} selected {% endif %}>Low</option>
+        </select><br>
+        <label>
+            <input type="checkbox" name="completed" required {% if note.completed %} checked {% endif %}>Completed
+        </label><br>
+        <input type="submit" value="Update Note">
+
+    </form>
+    <a href="/notes">Back to Notes</a>
+</body>
+</html>

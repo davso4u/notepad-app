@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Note</title>
+</head>
+<body>
+    <h1>Title: {{ note.title }}</h1>
+    <p><strong>priority</strong> {{ note.priority }}</p>
+    <p>Body: {{ note.body }}</p>
+    {% if note.completed %}
+        <p>Completed</p>
+    {% endif %}
+
+    <a href="/notes">Back to Notes</a> |
+    <a href="/notes/{{ note.id }}/edit_note">Edit Note</a> | 
+    <a href="/notes/{{ note.id }}/delete_note">Delete Note</a>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for msg in messages %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    <br>
+    <form action="/register" method="Post">
+        <label>first name</label>
+        <input type="text" placeholder="name" name="first_name" required><br>
+        <label>last name</label>
+        <input type="text" placeholder="name" name="last_name" required><br>
+        <label>username</label>
+        <input type="text" placeholder="username" name="username" required><br>
+        <label>password</label>
+        <input type="password" placeholder="password" name="password" required>
+        <label>confirm password</label>
+        <input type="password" placeholder="confirm password" name="confirm_password" required><br>
+        <input type="submit" value="Submit">
+    </form>
+    <p>Password must be minimum of 6 digits</p>
+    <p>passord must contain special symbols (@,#,!,&,%,?,$)</p>
+    <br>
+    <p><a href="{{url_for('home_page')}}">Login</a></p>
+</body>
+</html>
