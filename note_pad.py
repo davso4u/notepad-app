@@ -16,6 +16,8 @@ load_dotenv()
 app=Flask(__name__)
 app.secret_key= os.getenv('FLASK_SECRET_KEY')      #This line of code must be written for messages to show while using flash
 
+'''
+# These line of codes are for SQL SERVER
 
 sql_server = os.getenv('SQL_SERVER')
 sql_database = os.getenv('SQL_DATABASE')
@@ -48,13 +50,11 @@ class Note(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-# Automatically create tables if they don’t exist
-# with app.app_context():
-    # db.drop_all()
-    # db.create_all()
 
+'''
 
-
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///note_pad.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 
