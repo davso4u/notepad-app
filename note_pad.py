@@ -29,6 +29,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+'''
+
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///note_pad.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+
 db = SQLAlchemy(app)
 
 # Models
@@ -51,10 +60,8 @@ class Note(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
-'''
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///note_pad.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 
 
