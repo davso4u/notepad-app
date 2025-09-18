@@ -32,10 +32,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 '''
 
 
-
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///note_pad.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 
 
 db = SQLAlchemy(app)
@@ -59,6 +57,12 @@ class Note(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+
+
+# Automatically create tables if they don’t exist
+with app.app_context():
+    # db.drop_all()
+    db.create_all()
 
 
 
@@ -99,7 +103,7 @@ def home_page():
 
     # The random API on the home page
     try:
-        url=f"https://newsapi.org/v2/top-headlines?country=us&apiKey={'news_api_key'}"
+        url=f"https://newsapi.org/v2/top-headlines?country=us&apiKey={news_api_key}"
         response =requests.get(url)
         # this return the list of articles if it exists, otherwise it returns an empty list ([]) instead of crashing.
         if response.status_code == 200:
@@ -339,12 +343,12 @@ def toggle(id):
 
 
 
+# works on local running not on render
 
+# if __name__=="__main__":
+#     with app.app_context():
+#         db.create_all()
+#     app.run(debug=True)
 
-if __name__=="__main__":
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
-
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+#     port = int(os.environ.get("PORT", 10000))
+#     app.run(host="0.0.0.0", port=port)
