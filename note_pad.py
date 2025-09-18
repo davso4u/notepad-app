@@ -102,10 +102,10 @@ def home_page():
             news_url = article.get("url")
 
         else:
-            news_title, news_url = "Error fetching API"
+            news_title, news_url = "Error fetching API", "#"
     
     except Exception as e:
-        news_title, news_url = "Failed to fetch API"
+        news_title, news_url = "Failed to fetch API", "#"
     
     return render_template("notepad_homepage.html", news_title=news_title, news_url=news_url)
 
