@@ -76,11 +76,7 @@ with app.app_context():
 #current_user = None       #A Global variable To store the logged-in user, so that non registered member cannot access the note page
 
 # API for the random news site
-news_api_key = os.getenv('NEWS_API_KEY')
-
-@app.route("/check_key")
-def check_key():
-    return f"API Key: {os.getenv('NEWS_API_KEY')}"
+mediastack_api_key = os.getenv('MEDIASTACK_API_KEY')
 
 @app.route("/", methods=["GET", "POST"])     #Pages with forms(login,register, add note, edit note, etc) uses method=[GET, POST] while a page just displaying info/details only uses the GET method
 def home_page():
@@ -107,11 +103,11 @@ def home_page():
 
     # The random API on the home page
     try:
-        url=f"https://newsapi.org/v2/top-headlines?country=us&apiKey={news_api_key}"
+        url=f"https://api.mediastack.com/v1/news?access_key={mediastack_api_key}&countries=us"
         response =requests.get(url)
-        # this return the list of articles if it exists, otherwise it returns an empty list ([]) instead of crashing.
+        # this return the list of data (called articles in newsapi) if it exists, otherwise it returns an empty list ([]) instead of crashing.
         if response.status_code == 200:
-            news_data = response.json().get("articles", [])
+            news_data = response.json().get("data", [])
             article = random.choice(news_data)
             news_title = article.get("title")
             news_url = article.get("url")
