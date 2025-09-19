@@ -114,9 +114,10 @@ def home_page():
                 news_url = article.get("url")
             else:
                 news_title, news_url = "No articles available", "#"
-                flash(f"response code: {response.status_code}")
+                
         else:
             news_title, news_url = "Error fetching API", "#"
+            flash(f"response code: {response.status_code}")
     
     except Exception as e:
         print("News API error:", e)
