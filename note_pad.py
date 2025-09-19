@@ -76,7 +76,11 @@ with app.app_context():
 #current_user = None       #A Global variable To store the logged-in user, so that non registered member cannot access the note page
 
 # API for the random news site
-news_api_key = os.getenv('news_api_key')
+news_api_key = os.getenv('NEWS_API_KEY')
+
+@app.route("/check_key")
+def check_key():
+    return f"API Key: {os.getenv('NEWS_API_KEY')}"
 
 @app.route("/", methods=["GET", "POST"])     #Pages with forms(login,register, add note, edit note, etc) uses method=[GET, POST] while a page just displaying info/details only uses the GET method
 def home_page():
@@ -108,20 +112,16 @@ def home_page():
         # this return the list of articles if it exists, otherwise it returns an empty list ([]) instead of crashing.
         if response.status_code == 200:
             news_data = response.json().get("articles", [])
-            if news_data:
-                article = random.choice(news_data)
-                news_title = article.get("title")
-                news_url = article.get("url")
-            else:
-                news_title, news_url = "No articles available", "#"
-                
+            article = random.choice(news_data)
+            news_title = article.get("title")
+            news_url = article.get("url")
+
         else:
-            news_title, news_url = "Error fetching API", "#"
-            flash(f"response code: {response.status_code}")
+            news_title, news_url = "Error fetching API"
+            flash(f"Response code: {response.status_code}")
     
     except Exception as e:
-        print("News API error:", e)
-        news_title, news_url = "Failed to fetch API", "#"
+        news_title, news_url = "Failed to fetch API"
     
     return render_template("notepad_homepage.html", news_title=news_title, news_url=news_url)
 
@@ -350,10 +350,10 @@ def toggle(id):
 
 # works on local running not on render
 
-# if __name__=="__main__":
-#     with app.app_context():
-#         db.create_all()
-#     app.run(debug=True)
+if __name__=="__main__":
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
 
 #     port = int(os.environ.get("PORT", 10000))
 #     app.run(host="0.0.0.0", port=port)
