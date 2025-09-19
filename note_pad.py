@@ -108,14 +108,17 @@ def home_page():
         # this return the list of articles if it exists, otherwise it returns an empty list ([]) instead of crashing.
         if response.status_code == 200:
             news_data = response.json().get("articles", [])
-            article = random.choice(news_data)
-            news_title = article.get("title")
-            news_url = article.get("url")
-
+            if news_data:
+                article = random.choice(news_data)
+                news_title = article.get("title")
+                news_url = article.get("url")
+            else:
+                news_title, news_url = "No articles available", "#"
         else:
             news_title, news_url = "Error fetching API", "#"
     
     except Exception as e:
+        print("News API error:", e)
         news_title, news_url = "Failed to fetch API", "#"
     
     return render_template("notepad_homepage.html", news_title=news_title, news_url=news_url)
@@ -264,7 +267,7 @@ def edit_note(id):
         return redirect(url_for("notes"))
     
 
-    return render_template("edit_note.html", note=note)
+    return render_template("edit_note.html", note=note, id=id)
 
 
 @app.route("/notes/<int:id>/delete_note")
