@@ -17,7 +17,7 @@
         {% endwith %}
     
     <h1>Edit Note</h1>
-    <form action="/notes/{{ id }}/edit_note" method="post">    <!--this means i am directing it to edit_note url for a particuluar note-->
+    <form action="/notes/{{ note.id }}/edit_note" method="post">    <!--this means i am directing it to edit_note url for a particuluar note-->
         <label>Title</label>
         <input type="text" name="title" value="{{ note.title}}" required><br>
         <label>Body</label>
@@ -29,7 +29,7 @@
             <option value="Low" {% if note.priority == "Low" %} selected {% endif %}>Low</option>
         </select><br>
         <label>
-            <input type="checkbox" name="completed" required {% if note.completed %} checked {% endif %}>Completed
+            <input type="checkbox" name="completed" {% if note.completed %} checked {% endif %}>Completed
         </label><br>
         <input type="submit" value="Update Note">
 
