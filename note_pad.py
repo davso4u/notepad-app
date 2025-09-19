@@ -122,6 +122,7 @@ def home_page():
     
     except Exception as e:
         news_title, news_url = "Failed to fetch API", "#"
+        flash(f"Response code: {response.status_code}")
     
     return render_template("notepad_homepage.html", news_title=news_title, news_url=news_url)
 
